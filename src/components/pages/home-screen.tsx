@@ -9,9 +9,8 @@ const HomeScreen: FC = () => {
       <TopBar title="React for Tensorflow.js" />
       <Grid container>
         {CardData.map((item) => (
-          <Grid item xs={6} className={classes.gridStyle}>
+          <Grid item xs={6} className={classes.gridStyle} key={item.id}>
             <ImageCard
-              key={item.id}
               image={item.image}
               title={item.title}
               label={item.label}
