@@ -19,8 +19,12 @@ const ImageCard: FC<Props> = ({ image, title, label }: Props) => {
   return (
     <Card className={classes.cardStyle}>
       <CardActionArea>
-        <CardMedia className={classes.media} image={image} title={title} />
-        <CardContent>
+        <CardMedia
+          className={classes.cardMediaStyle}
+          image={image}
+          title={title}
+        />
+        <CardContent className={classes.cardContentsStyle}>
           <Typography gutterBottom variant="subtitle2" component="h2">
             {label}
           </Typography>
@@ -31,16 +35,26 @@ const ImageCard: FC<Props> = ({ image, title, label }: Props) => {
 };
 export default ImageCard;
 
-const useStyles = makeStyles(() =>
+const useStyles = makeStyles((theme) =>
   createStyles({
     cardStyle: {
       width: "100%",
       height: "100%",
     },
-    media: {
-      height: "100px",
+    cardMediaStyle: {
+      [theme.breakpoints.down("xs")]: {
+        height: "80px",
+        objectFit: "cover",
+      },
+      [theme.breakpoints.up("sm")]: {
+        height: "150px",
+        objectFit: "cover",
+      },
     },
-    cardHeaderStyle: {},
-    cardContentsStyle: {},
+    cardContentsStyle: {
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+    },
   })
 );
