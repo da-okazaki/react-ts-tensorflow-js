@@ -25,14 +25,14 @@ jobs:
       uses: borales/actions-yarn@v2.0.0
       with:
         cmd: install
-    - name: Yarn [Lint]
-      uses: borales/actions-yarn@v2.0.0
-      with:
-        cmd: lint-check
-    - name: Yarn [Test]
-      uses: borales/actions-yarn@v2.0.0
-      with:
-        cmd: test
+    #- name: Yarn [Lint]
+    #  uses: borales/actions-yarn@v2.0.0
+    #  with:
+    #    cmd: lint-check
+    #- name: Yarn [Test]
+    #  uses: borales/actions-yarn@v2.0.0
+    #  with:
+    #    cmd: test
 
   deploy:
     if: ${{ github.ref == 'refs/heads/main' }}
