@@ -1,26 +1,58 @@
-name: vercel deploy
+# prettier-ignore
+name: Vercel Deploy
+
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
   pull_request:
-    branches:
-      - main
-  pull_request_target:
+    branches: [ main ]
 
 jobs:
-  deploy:
+  tests:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [14.x]
+        architecture: [x64]
     steps:
-      - uses: actions/checkout@v2
-      - uses: ./
-        id: vercel-action
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          github-comment: false
-          vercel-org-id: ${{ secrets.ORG_ID }}
-          vercel-project-id: ${{ secrets.PROJECT_ID }}
-      - name: preview-url
-        run: |
-          echo ${{ steps.vercel-action.outputs.preview-url }}
+    - name: Check out Git repository
+      uses: actions/checkout@v2
+      
+    - name: Use Nodejs ${{ matrix.node-version }} - ${{ matrix.architecture }}
+      uses: actions/setup-node@v2
+      
+    - name: Yarn [Install]
+      uses: borales/actions-yarn@v2.0.0
+      with:
+        cmd: yarn install
+    - name: Yarn [Lint]
+      uses: borales/actions-yarn@v2.0.0
+      with:
+        cmd: lint-check
+    - name: Yarn [Test]
+      uses: borales/actions-yarn@v2.0.0
+      with:
+        cmd: test
+
+  deploy:
+    if: ${{ github.ref == 'refs/heads/master' }}
+    needs: tests
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [14.x]
+        architecture: [x64]
+    steps:
+    - name: Check out Git repository
+      uses: actions/checkout@v2
+      with:
+        cmd: yarn build
+        
+    - name: Vercel Deploy
+      uses: amondnet/vercel-action@v20
+      with:
+        vercel-token: ${{ secrets.VERCEL_TOKEN }}
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        vercel-args: '--prod'
+        vercel-org-id: ${{ secrets.VERCEL_ORG_ID}}
+        vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID}}
