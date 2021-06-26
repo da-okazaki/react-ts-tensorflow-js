@@ -24,7 +24,7 @@ jobs:
     - name: Yarn [Install]
       uses: borales/actions-yarn@v2.0.0
       with:
-        cmd: yarn install
+        cmd: install
     - name: Yarn [Lint]
       uses: borales/actions-yarn@v2.0.0
       with:
@@ -35,7 +35,7 @@ jobs:
         cmd: test
 
   deploy:
-    if: ${{ github.ref == 'refs/heads/master' }}
+    if: ${{ github.ref == 'refs/heads/main' }}
     needs: tests
     runs-on: ubuntu-latest
     strategy:
@@ -46,7 +46,7 @@ jobs:
     - name: Check out Git repository
       uses: actions/checkout@v2
       with:
-        cmd: yarn build
+        cmd: build
         
     - name: Vercel Deploy
       uses: amondnet/vercel-action@v20
