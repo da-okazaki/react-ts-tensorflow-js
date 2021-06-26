@@ -13,6 +13,10 @@ const TopBar: FC<AppBarProps> = ({ title }: AppBarProps) => {
   return (
     <AppBar className={classes.root}>
       <Toolbar variant="dense">
+        <img
+          src={`${process.env.PUBLIC_URL}/logo.png`}
+          className={classes.logoStyle}
+        />
         <Typography variant="subtitle1">{title}</Typography>
       </Toolbar>
     </AppBar>
@@ -31,6 +35,10 @@ const useStyles = makeStyles((theme) =>
       display: "flex",
       textAlign: "left",
       marginLeft: theme.spacing(2),
+    },
+    logoStyle: {
+      width: "24px",
+      marginRight: theme.spacing(2),
     },
   })
 );
