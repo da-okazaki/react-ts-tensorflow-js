@@ -44,7 +44,9 @@ jobs:
         architecture: [x64]
     steps:
     - name: Check out Git repository
-      uses: actions/checkout@v2      
+      uses: actions/checkout@v2
+    - name: build
+      run:  npm run build
     - name: Vercel Deploy
       uses: amondnet/vercel-action@v20
       with:
