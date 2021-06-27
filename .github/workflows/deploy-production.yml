@@ -41,12 +41,12 @@ jobs:
     - name: Install Dependencies
     - uses: borales/actions-yarn@v2.3.0
       with:
-        cmd: install # will run `yarn install` command
+        cmd: install
 
     - name: Build
     - uses: borales/actions-yarn@v2.3.0
       with:
-        cmd: build # will run `yarn build` command
+        cmd: build
 
     - name: Vercel Deploy
       uses: amondnet/vercel-action@v20
