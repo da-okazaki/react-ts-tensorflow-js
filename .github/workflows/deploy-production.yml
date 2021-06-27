@@ -45,8 +45,11 @@ jobs:
     steps:
     - name: Check out Git repository
       uses: actions/checkout@v2
-    - name: build
-      run:  npm run build
+      
+    - name: Build
+      run: |
+        yarn build
+        
     - name: Vercel Deploy
       uses: amondnet/vercel-action@v20
       with:
