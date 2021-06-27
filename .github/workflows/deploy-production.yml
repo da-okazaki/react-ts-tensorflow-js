@@ -20,11 +20,6 @@ jobs:
       
     - name: Use Nodejs ${{ matrix.node-version }} - ${{ matrix.architecture }}
       uses: actions/setup-node@v2
-      
-    - name: Yarn [Install]
-      uses: borales/actions-yarn@v2.0.0
-      with:
-        cmd: install
 
   deploy:
     if: ${{ github.ref == 'refs/heads/main' }}
@@ -37,17 +32,14 @@ jobs:
     steps:
     - name: Check out Git repository
       uses: actions/checkout@v2
-
     - name: Install Dependencies
     - uses: borales/actions-yarn@v2.3.0
       with:
         cmd: install
-
     - name: Build
     - uses: borales/actions-yarn@v2.3.0
       with:
         cmd: build
-
     - name: Vercel Deploy
       uses: amondnet/vercel-action@v20
       with:
