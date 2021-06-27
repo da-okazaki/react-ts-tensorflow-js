@@ -8,6 +8,18 @@ on:
     branches: [ main ]
 
 jobs:
+  build:
+    name: install & build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: borales/actions-yarn@v2.3.0
+        with:
+          cmd: install # will run `yarn install` command
+      - uses: borales/actions-yarn@v2.3.0
+        with:
+          cmd: build # will run `yarn build` command
+
   deploy:
     if: ${{ github.ref == 'refs/heads/main' }}
     needs: tests
@@ -17,13 +29,6 @@ jobs:
         node-version: [14.x]
         architecture: [x64]
     steps:
-      - uses: actions/checkout@v2
-      - uses: borales/actions-yarn@v2.3.0
-        with:
-          cmd: install # will run `yarn install` command
-      - uses: borales/actions-yarn@v2.3.0
-        with:
-          cmd: build # will run `yarn build` command
     #- name: Install Dependencies
     #- uses: borales/actions-yarn@v2.3.0
     #  with:
